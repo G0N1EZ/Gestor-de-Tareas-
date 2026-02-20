@@ -7,32 +7,39 @@ class CarpetaTareas(QWidget):
     def __init__(self, nombre: str):
         super().__init__()
         self.nombre = QLabel(nombre, self)
-        self.cerrado = True
         self.contenido = QWidget()
         self.boton = QPushButton("Abrir Carpeta", self)
         self.boton_agregar_tareas = QPushButton("Agregar Tareas")
 
         # layout
         self.layout_tareas = QVBoxLayout()
+        self.layout_tareas.addWidget(self.boton)
         self.layout_tareas.addWidget(self.boton_agregar_tareas)
         self.contenido.setLayout(self.layout_tareas)
         layout_carpeta = QVBoxLayout()
+        layout_carpeta.addWidget(self.nombre)
         layout_carpeta.addWidget(self.boton)
         layout_carpeta.addWidget(self.contenido)
         self.setLayout(layout_carpeta)
 
-        self.boton.clicked.connect(self.mostrar_carpeta)
+        #coneccion de botones
+        self.boton.clicked.connect(self.mostrar_cerrar_carpeta)
+        self.boton_agregar_tareas.clicked.connect(self.nombre_tarea)
+
         self.contenido.setVisible(False)
 
-    def mostrar_carpeta(self):
-        if self.cerrado is True:
+    def mostrar_cerrar_carpeta(self):
+        if not self.contenido.isVisible():
+            self.boton.setText("Cerrar Carpeta")
             self.contenido.setVisible(True)
-            self.cerrado = False
-
-    def cerrar_carpeta(self):
-        if self.cerrado is False:
+        else:
+            self.boton.setText("Abrir Carpeta")
             self.contenido.setVisible(False)
-            self.cerrado = False
+
+    def nombre_tarea(self):
+        nombre_tarea, ok = QInputDialog.getText(self, "Nueva tarea", "Nombre de Tarea")
+        if ok and nombre_tarea.strip():
+            self.crear_tarea(nombre_tarea=nombre_tarea)
 
     def crear_tarea(self, nombre_tarea: str):
         nueva_tarea = QCheckBox(nombre_tarea, self.contenido)

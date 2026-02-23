@@ -51,6 +51,7 @@ class VentanaPrincipal(QWidget):
         super().__init__()
         self.setGeometry(ORIGIN_X, ORIGIN_Y, SCREEN_WIDTH, SCREEN_HEIGHT)
         boton_agregar_carpeta = QPushButton("Agregar Carpeta de Tareas")
+
         # botones
         boton_agregar_carpeta.clicked.connect(self.crear_carpeta)
 

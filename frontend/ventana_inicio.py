@@ -4,12 +4,15 @@ from frontend.parametros import SCREEN_WIDTH, SCREEN_HEIGHT, ORIGIN_X, ORIGIN_Y
 
 class VentanaInicio(QWidget):
     senal_crear_verificar_usuario = pyqtSignal(str)
+    senal_abrir_ventana = pyqtSignal()
 
     def __init__(self):
         super().__init__()
         self.setGeometry(ORIGIN_X, ORIGIN_Y, SCREEN_WIDTH, SCREEN_HEIGHT)
         self.mensaje_inicio = QLabel("Bienvenido a tu Gestor de Tareas", self)
         self.etiqueta_nombre = QLineEdit("Introduce tu nombre de usuario", self)
+        self.boton_recuperado = QPushButton("Recuperar Datos", self)
+        self.mensaje_datos = QLabel(self)
         self.boton_inicio = QPushButton("Entrar", self)
 
         # Layout
@@ -19,17 +22,40 @@ class VentanaInicio(QWidget):
         layout.addStretch()
         layout.addStretch()
         layout.addWidget(self.etiqueta_nombre)
+        layout.addWidget(self.boton_recuperado)
+        layout.addWidget(self.mensaje_datos)
+        layout.addStretch()
         layout.addWidget(self.boton_inicio)
         layout.addStretch()
         self.setLayout(layout)
 
+        #etiqueta de datos
+        self.mensaje_datos.setVisible(False)
+
         # conexion
-        self.boton_inicio.clicked.connect(self.introducir_nombre())
+        self.boton_recuperado.clicked.connect(self.introducir_nombre)
+        self.boton_inicio.clicked.connect(self.iniciar_sesion)
 
     def introducir_nombre(self):
         nombre_usuario = self.etiqueta_nombre.text()
         if nombre_usuario != "Introduce tu nombre de usuario":
             self.senal_crear_verificar_usuario.emit(nombre_usuario)
+
+    def datos_recuperados(self, datos):
+        if datos != {}:
+            self.mensaje_datos.setText("Las Tareas del Usuario fueron Recuperadas")
+            self.mensaje_datos.setVisible(True)
+
+        else:
+            self.mensaje_datos.setText("No se pudieron cargar datos, intenta otro nombre")
+            self.mensaje_datos.setVisible(True)
+
+    def iniciar_sesion(self):
+        self.hide()
+        self.senal_abrir_ventana.emit()
+
+
+
 
 
 

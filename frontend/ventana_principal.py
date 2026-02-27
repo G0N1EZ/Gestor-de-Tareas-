@@ -50,28 +50,34 @@ class CarpetaTareas(QWidget):
 
 
 class VentanaPrincipal(QWidget):
+    senal_volver_inicial = pyqtSignal()
     senal_guardad_estado = pyqtSignal(dict, str)
     def __init__(self):
         super().__init__()
         self.sesion_actual = {}
         self.setGeometry(ORIGIN_X, ORIGIN_Y, SCREEN_WIDTH, SCREEN_HEIGHT)
         boton_agregar_carpeta = QPushButton("Agregar Carpeta de Tareas")
-        boton_guardado = QPushButton("Guardar Sesion")
+        boton_guardado = QPushButton("Guardar Seción")
+        boton_atras = QPushButton("Terminar Seción")
 
         # botones
         boton_agregar_carpeta.clicked.connect(self.crear_carpeta)
         boton_guardado.clicked.connect(self.guardar_estado)
+        boton_atras.clicked.connect(self.volver_ventana_inicial)
 
         # Layout
         self.layout_pagina = QHBoxLayout()
         self.layout_superior = QVBoxLayout()
+        self.layout_inferior = QHBoxLayout()
 
-        self.layout_superior.addWidget(boton_guardado)
-        self.layout_pagina.addLayout(self.layout_superior)
+        self.layout_inferior.addWidget(boton_atras)
         self.layout_pagina.addWidget(boton_agregar_carpeta)
+        self.layout_superior.addWidget(boton_guardado)
+        self.layout_superior.addLayout(self.layout_pagina)
+        self.layout_superior.addLayout(self.layout_inferior)
 
         # agregar cosas al layout
-        self.setLayout(self.layout_pagina)
+        self.setLayout(self.layout_superior)
 
     def crear_carpeta(self):
         nombre_carpeta, ok = QInputDialog.getText(self, "Nueva carpeta", "Nombre de Carpeta")
@@ -108,6 +114,16 @@ class VentanaPrincipal(QWidget):
                 path_archivo += ".json"
             self.senal_guardad_estado.emit(sesion_guardada, path_archivo)
             QMessageBox.information(self, "Notificación", "Guardado Exitoso")
+
+    def volver_ventana_inicial(self):
+        respuesta = QMessageBox.question(self, "Alerta", "Quiere Guardar antes de Volver, sino los cambios se perderán", QMessageBox.Yes | QMessageBox.No)
+        if respuesta == QMessageBox.Yes:
+            self.guardar_estado()
+
+        self.sesion_actual = {}
+        self.hide()
+        self.senal_volver_inicial.emit()
+
 
 
 

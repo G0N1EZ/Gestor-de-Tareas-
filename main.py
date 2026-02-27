@@ -27,6 +27,7 @@ if __name__ == "__main__":
     sistema.senal_datos_cargados.connect(ventana_inicio.carga_json)
     ventana_inicio.senal_abrir_ventana_principal.connect(sistema.enviar_datos_principal)
     sistema.senal_envio_datos_principal.connect(ventana_principal.mostrar_ventana)
+    ventana_principal.senal_volver_inicial.connect(ventana_inicio.show)
 
     ventana_inicio.show()
 

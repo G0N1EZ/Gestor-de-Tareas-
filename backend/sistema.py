@@ -17,7 +17,7 @@ class Sistema(QObject):
             json.dump(datos, archivo, indent=4, ensure_ascii=False)
 
     def cargar_archivo(self, path):
-        with open(path, "w", encoding="utf-8") as archivo:
+        with open(path, "r", encoding="utf-8") as archivo:
             datos = json.load(archivo)
         self.datos = datos
         self.senal_datos_cargados.emit(datos)

@@ -41,12 +41,12 @@ class CarpetaTareas(QWidget):
     def nombre_tarea(self):
         nombre_tarea, ok = QInputDialog.getText(self, "Nueva tarea", "Nombre de Tarea")
         if ok and nombre_tarea.strip():
+            self.tareas.append(nombre_tarea)
             self.crear_tarea(nombre_tarea=nombre_tarea)
 
     def crear_tarea(self, nombre_tarea: str):
         nueva_tarea = QCheckBox(nombre_tarea, self.contenido)
         self.layout_tareas.addWidget(nueva_tarea)
-        self.tareas.append(self.nombre_tarea)
 
 
 class VentanaPrincipal(QWidget):

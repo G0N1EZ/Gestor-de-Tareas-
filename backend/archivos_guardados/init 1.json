@@ -1,9 +1,26 @@
 {
     "carpeta 1": [
-        "tarea 1"
+        [
+            "tarea 1",
+            true
+        ],
+        [
+            "tafre 1.1",
+            false
+        ]
     ],
     "carpeta 2": [
-        "comer dormir",
-        "gym"
+        [
+            "2.1",
+            false
+        ],
+        [
+            "2.2",
+            true
+        ],
+        [
+            "tarea 2.3",
+            true
+        ]
     ]
 }

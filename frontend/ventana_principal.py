@@ -41,12 +41,12 @@ class CarpetaTareas(QWidget):
     def nombre_tarea(self):
         nombre_tarea, ok = QInputDialog.getText(self, "Nueva tarea", "Nombre de Tarea")
         if ok and nombre_tarea.strip():
-            self.tareas.append(nombre_tarea)
             self.crear_tarea(nombre_tarea=nombre_tarea)
 
     def crear_tarea(self, nombre_tarea: str):
         nueva_tarea = QCheckBox(nombre_tarea, self.contenido)
         self.layout_tareas.addWidget(nueva_tarea)
+        self.tareas.append(nueva_tarea)
 
 
 class VentanaPrincipal(QWidget):
@@ -84,18 +84,29 @@ class VentanaPrincipal(QWidget):
         for carpeta, tareas in datos.items():
             carpeta_recuperada = CarpetaTareas(carpeta, tareas)
             for tarea in tareas:
-                tarea_recuperada = QCheckBox(tarea, carpeta_recuperada.contenido)
+                tarea_recuperada = QCheckBox(tarea[0], carpeta_recuperada.contenido)
+                if tarea[1]:
+                    tarea_recuperada.setChecked(True)
                 carpeta_recuperada.layout_tareas.addWidget(tarea_recuperada)
             self.layout_pagina.addWidget(carpeta_recuperada)
             self.sesion_actual[carpeta] = tareas
         self.show()
 
     def guardar_estado(self):
+        sesion_guardada = {}
+        for carpeta, lista_objetos in self.sesion_actual.items():
+            lista_tareas_guardadas = []
+            for objeto_tarea in lista_objetos:
+                nombre_tarea = objeto_tarea.text()
+                estado_tarea = objeto_tarea.isChecked()
+                lista_tareas_guardadas.append((nombre_tarea, estado_tarea))
+            sesion_guardada[carpeta] = lista_tareas_guardadas
+
         path_archivo, _ = QFileDialog.getSaveFileName(self, "Guardar Estado Actual", PATH_ARCHIVOS, "JSON (*.json)")
         if path_archivo:
             if not path_archivo.endswith(".json"):
                 path_archivo += ".json"
-            self.senal_guardad_estado.emit(self.sesion_actual, path_archivo)
+            self.senal_guardad_estado.emit(sesion_guardada, path_archivo)
             QMessageBox.information(self, "Notificación", "Guardado Exitoso")
 
 

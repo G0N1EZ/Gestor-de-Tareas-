@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QLabel, QTextEdit, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QWidget, QScrollArea, QComboBox, QInputDialog
-from frontend.parametros import SCREEN_WIDTH, SCREEN_HEIGHT, ORIGIN_X, ORIGIN_Y
+from PyQt5.QtWidgets import QLabel, QMessageBox, QFileDialog, QTextEdit, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QWidget, QScrollArea, QComboBox, QInputDialog
+from frontend.parametros import SCREEN_WIDTH, SCREEN_HEIGHT, ORIGIN_X, ORIGIN_Y, PATH_ARCHIVOS
 from PyQt5.QtCore import pyqtSignal
 
 
@@ -50,7 +50,7 @@ class CarpetaTareas(QWidget):
 
 
 class VentanaPrincipal(QWidget):
-    senal_guardad_estado = pyqtSignal(dict)
+    senal_guardad_estado = pyqtSignal(dict, str)
     def __init__(self):
         super().__init__()
         self.sesion_actual = {}
@@ -60,6 +60,7 @@ class VentanaPrincipal(QWidget):
 
         # botones
         boton_agregar_carpeta.clicked.connect(self.crear_carpeta)
+        boton_guardado.clicked.connect(self.guardar_estado)
 
         # Layout
         self.layout_pagina = QHBoxLayout()
@@ -90,7 +91,16 @@ class VentanaPrincipal(QWidget):
         self.show()
 
     def guardar_estado(self):
-        self.senal_guardad_estado.emit(self.sesion_actual)
+        path_archivo, _ = QFileDialog.getSaveFileName(self, "Guardar Estado Actual", PATH_ARCHIVOS, "JSON (*.json)")
+        if path_archivo:
+            if not path_archivo.endswith(".json"):
+                path_archivo += ".json"
+            self.senal_guardad_estado.emit(self.sesion_actual, path_archivo)
+            QMessageBox.information(self, "Notificación", "Guardado Exitoso")
+
+
+
+
 
 
 

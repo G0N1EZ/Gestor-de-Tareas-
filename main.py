@@ -21,11 +21,12 @@ if __name__ == "__main__":
     ventana_inicio = VentanaInicio()
     ventana_principal = VentanaPrincipal()
 
-    ventana_inicio.senal_crear_verificar_usuario.connect(sistema.buscar_crear_usuario)
-    sistema.senal_inicio_usuario.connect(ventana_inicio.datos_recuperados)
-    ventana_inicio.senal_abrir_ventana.connect(sistema.envio_datos)
-    sistema.senal_envio_datos.connect(ventana_principal.mostrar_ventana)
-    ventana_principal.senal_guardad_estado.connect(sistema.guardar_estado)
+    ventana_principal.senal_guardad_estado.connect(sistema.guardar_archivo)
+    ventana_inicio.senal_abrir_ventana_principal.connect(ventana_principal.show)
+    ventana_inicio.senal_cargar_datos.connect(sistema.cargar_archivo)
+    sistema.senal_datos_cargados.connect(ventana_inicio.carga_json)
+    ventana_inicio.senal_abrir_ventana_principal.connect(sistema.enviar_datos_principal)
+    sistema.senal_envio_datos_principal.connect(ventana_principal.mostrar_ventana)
 
     ventana_inicio.show()
 

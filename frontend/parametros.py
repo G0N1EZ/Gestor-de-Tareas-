@@ -6,3 +6,4 @@ ORIGIN_X = 100
 ORIGIN_Y = 50
 
 PATH_ARCHIVOS = os.path.join("backend", "archivos_guardados")
+PATH_ESTILO_VENTANA_PRINCIPAL = os.path.join("frontend", "estilo_ventana_principal.css")

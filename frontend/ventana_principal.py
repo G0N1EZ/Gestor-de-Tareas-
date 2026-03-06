@@ -1,5 +1,6 @@
+
 from PyQt5.QtWidgets import QLabel, QMessageBox, QFileDialog, QTextEdit, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QWidget, QScrollArea, QComboBox, QInputDialog
-from frontend.parametros import SCREEN_WIDTH, SCREEN_HEIGHT, ORIGIN_X, ORIGIN_Y, PATH_ARCHIVOS
+from frontend.parametros import SCREEN_WIDTH, SCREEN_HEIGHT, ORIGIN_X, ORIGIN_Y, PATH_ARCHIVOS, PATH_ESTILO_VENTANA_PRINCIPAL
 from PyQt5.QtCore import pyqtSignal
 
 
@@ -56,6 +57,7 @@ class VentanaPrincipal(QWidget):
         super().__init__()
         self.sesion_actual = {}
         self.setGeometry(ORIGIN_X, ORIGIN_Y, SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.setStyleSheet(self.ventana_estilo)
         boton_agregar_carpeta = QPushButton("Agregar Carpeta de Tareas")
         boton_guardado = QPushButton("Guardar Seción")
         boton_atras = QPushButton("Terminar Seción")
@@ -123,6 +125,13 @@ class VentanaPrincipal(QWidget):
         self.sesion_actual = {}
         self.hide()
         self.senal_volver_inicial.emit()
+
+    @property
+    def ventana_estilo(self):
+        with open(PATH_ESTILO_VENTANA_PRINCIPAL, "r") as archivo_estilo:
+            estilo_hoja = archivo_estilo.read()
+        return estilo_hoja
+
 
 
 

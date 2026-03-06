@@ -1,4 +1,5 @@
 import sys
+import os
 from PyQt5.QtWidgets import QApplication
 from backend.sistema import Sistema
 from frontend.ventana_principal import VentanaPrincipal
@@ -16,7 +17,6 @@ if __name__ == "__main__":
 
 
     app = QApplication(sys.argv)
-
     sistema = Sistema()
     ventana_inicio = VentanaInicio()
     ventana_principal = VentanaPrincipal()

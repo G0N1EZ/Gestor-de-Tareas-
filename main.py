@@ -1,5 +1,4 @@
 import sys
-import os
 from PyQt5.QtWidgets import QApplication
 from backend.sistema import Sistema
 from frontend.ventana_principal import VentanaPrincipal

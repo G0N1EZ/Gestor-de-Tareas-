@@ -1,7 +1,7 @@
-
 from PyQt5.QtWidgets import QLabel, QMessageBox, QFileDialog, QTextEdit, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QWidget, QScrollArea, QComboBox, QInputDialog
-from frontend.parametros import SCREEN_WIDTH, SCREEN_HEIGHT, ORIGIN_X, ORIGIN_Y, PATH_ARCHIVOS, PATH_ESTILO_VENTANA_PRINCIPAL
+from frontend.parametros import SCREEN_WIDTH, SCREEN_HEIGHT, ORIGIN_X, ORIGIN_Y, PATH_ARCHIVOS, PATH_ESTILO_VENTANA_PRINCIPAL, PATH_ICONO
 from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QIcon
 
 
 
@@ -55,6 +55,8 @@ class VentanaPrincipal(QWidget):
     senal_guardad_estado = pyqtSignal(dict, str)
     def __init__(self):
         super().__init__()
+        self.setWindowTitle("Gestor de Tareas")
+        self.setWindowIcon(QIcon(PATH_ICONO))
         self.sesion_actual = {}
         self.setGeometry(ORIGIN_X, ORIGIN_Y, SCREEN_WIDTH, SCREEN_HEIGHT)
         self.setStyleSheet(self.ventana_estilo)
@@ -105,6 +107,7 @@ class VentanaPrincipal(QWidget):
         for carpeta, lista_objetos in self.sesion_actual.items():
             lista_tareas_guardadas = []
             for objeto_tarea in lista_objetos:
+                print(objeto_tarea)
                 nombre_tarea = objeto_tarea.text()
                 estado_tarea = objeto_tarea.isChecked()
                 lista_tareas_guardadas.append((nombre_tarea, estado_tarea))

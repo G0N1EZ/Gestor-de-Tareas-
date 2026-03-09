@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import QLabel, QMessageBox, QFileDialog, QTextEdit, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QWidget, QScrollArea, QComboBox, QInputDialog
-from frontend.parametros import SCREEN_WIDTH, SCREEN_HEIGHT, ORIGIN_X, ORIGIN_Y, PATH_ARCHIVOS, PATH_ESTILO_VENTANA_PRINCIPAL, PATH_ICONO
-from PyQt5.QtCore import pyqtSignal
+from frontend.parametros import SCREEN_WIDTH, SCREEN_HEIGHT, ORIGIN_X, ORIGIN_Y, PATH_ARCHIVOS, PATH_ESTILO_VENTANA_PRINCIPAL, PATH_ICONO, WIDTH_CARPETA_TAREAS, HEIGHT_CARPETA_TAREAS
+from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QIcon
+
 
 
 
@@ -10,6 +11,7 @@ class CarpetaTareas(QWidget):
         super().__init__()
         self.tareas = []
         self.nombre = QLabel(nombre, self)
+        self.nombre.setAlignment(Qt.AlignCenter)
         self.contenido = QWidget()
         self.boton = QPushButton("Abrir Carpeta", self)
         self.boton_agregar_tareas = QPushButton("Agregar Tareas")

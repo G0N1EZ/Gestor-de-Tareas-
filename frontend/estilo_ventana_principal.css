@@ -7,14 +7,24 @@ QWidget {
 
 QLineEdit {
     background-color: white;
-    color: black
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QInputDialog {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 QPushButton {
     background-color:darkkhaki;
-    border: 2px;
+    border: 2px solid black;
     border-color: black;
     padding: 2px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 QPushButton:hover {
@@ -22,14 +32,14 @@ QPushButton:hover {
 }
 CarpetaTareas QWidget {
     background-color: lightgreen;
-    border: 2px;
-    border-color: black;
+    border: 2px solid green;
     padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 CarpetaTareas QPushButton {
-    border: 2px;
-    border-color: black;
+    border: 1px solid  rgb(12, 114, 58);
 }
 
 CarpetaTareas QPushButton:hover {
@@ -38,12 +48,8 @@ CarpetaTareas QPushButton:hover {
 
 QCheckBox {
     background-color:mediumseagreen;
-    border: 1px;
-    border-color: mediumseagreen;
+    border: 1px solid rgb(12, 114, 58);
     border-radius: 1px;
 }
 
-QCheckBox:hover {
-    border-color: black;
-}
 
